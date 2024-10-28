@@ -1,0 +1,194 @@
+loadstring(game:HttpGet(("https://raw.githubusercontent.com/REDzHUB/LibraryV2/main/redzLib")))()
+
+MakeWindow({
+  Hub = {
+    Title = "DemonicHub",
+    Animation = "by : DemonicOfficial"
+  },
+  
+  Key = {
+    KeySystem = true,
+    Title = "Key System",
+    Description = "",
+    KeyLink = "https://pastebin.com/dtVMJwue",
+    Keys = {"1lov3y0u"},
+    Notifi = {
+      Notifications = true,
+      CorrectKey = "Running the Script...",
+      Incorrectkey = "The key is incorrect",
+      CopyKeyLink = "https://pastebin.com/dtVMJwue"
+    }
+  }
+})
+  
+  local Main = MakeTab({Name = "Main"})
+  
+  MakeNotifi({
+  Title = "UI LIBRARY CREDIT TO Redz9999",
+  Text = "script running!!",
+  Time = 5
+})
+  
+  MakeNotifi({
+  Title = "Credit to Demonic_Official",
+  Text = "script running!!",
+  Time = 5
+})
+
+AddButton(Main, {
+  Name = "Aimbot",
+  Callback = function()loadstring(game:HttpGet("https://rentry.co/n55gmtpi/raw", true))()
+    
+  end
+})
+
+AddTextBox(Main,{
+  Name = "Silent Aim"
+  Default= "",
+  PlaceholderText = "Value",
+  ClearText = true,
+  Callback = function(value)local fov = value
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local Cam = game.Workspace.CurrentCamera
+ 
+local FOVring = Drawing.new("Circle")
+FOVring.Visible = true
+FOVring.Thickness = 2
+FOVring.Color = Color3.fromRGB(128, 0, 128) -- Purple color
+FOVring.Filled = false
+FOVring.Radius = fov
+FOVring.Position = Cam.ViewportSize / 2
+ 
+local function updateDrawings()
+    local camViewportSize = Cam.ViewportSize
+    FOVring.Position = camViewportSize / 2
+end
+ 
+local function onKeyDown(input)
+    if input.KeyCode == Enum.KeyCode.Delete then
+        RunService:UnbindFromRenderStep("FOVUpdate")
+        FOVring:Remove()
+    end
+end
+ 
+UserInputService.InputBegan:Connect(onKeyDown)
+ 
+local function lookAt(target)
+    local lookVector = (target - Cam.CFrame.Position).unit
+    local newCFrame = CFrame.new(Cam.CFrame.Position, Cam.CFrame.Position + lookVector)
+    Cam.CFrame = newCFrame
+end
+ 
+local function getClosestPlayerInFOV(trg_part)
+    local nearest = nil
+    local last = math.huge
+    local playerMousePos = Cam.ViewportSize / 2
+ 
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= Players.LocalPlayer then
+            local part = player.Character and player.Character:FindFirstChild(trg_part)
+            if part then
+                local ePos, isVisible = Cam:WorldToViewportPoint(part.Position)
+                local distance = (Vector2.new(ePos.x, ePos.y) - playerMousePos).Magnitude
+ 
+                if distance < last and isVisible and distance < fov then
+                    last = distance
+                    nearest = player
+                end
+            end
+        end
+    end
+ 
+    return nearest
+end
+ 
+RunService.RenderStepped:Connect(function()
+    updateDrawings()
+    local closest = getClosestPlayerInFOV("Head")
+    if closest and closest.Character:FindFirstChild("Head") then
+        lookAt(closest.Character.Head.Position)
+    end
+end)
+
+AddTextBox(Main,{
+  Name = "Head Hitbox"
+  Default = "",
+  PlaceholderText = "Value",
+  ClearText = true,
+  Callback = function(value)_G.HeadSize = value
+_G.Disabled = true
+game:GetService('RunService').RenderStepped:connect(function()
+if _G.Disabled then
+for i,v in next, game:GetService('Players'):GetPlayers() do
+if v.Name ~= game:GetService('Players').LocalPlayer.Name then
+pcall(function()
+v.Character.Head.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
+v.Character.Head.Transparency = 1
+v.Character.Head.BrickColor = BrickColor.new("white")
+v.Character.Head.Material = "Neon"
+v.Character.Head.CanCollide = false
+v.Character.Head.Massless = true
+end)
+end
+end
+end
+end)
+
+AddTextBox(Main,{
+  Name = "Hitbox",
+  Default = "",
+  PlaceholderText = "Value",
+  ClearText = true,
+  Callback = function(value)
+    _G.HeadSize = value
+_G.Disabled = true
+ 
+game:GetService('RunService').RenderStepped:connect(function()
+if _G.Disabled then
+for i,v in next, game:GetService('Players'):GetPlayers() do
+if v.Name ~= game:GetService('Players').LocalPlayer.Name then
+pcall(function()
+v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
+v.Character.HumanoidRootPart.Transparency = 0.7
+v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really white")
+v.Character.HumanoidRootPart.Material = "Neon"
+v.Character.HumanoidRootPart.CanCollide = false
+end)
+end
+end
+end
+end)
+      end
+})
+
+local Main = MakeTab({Name = "Esp"})
+
+AddButton(Main, {
+  Name = "Highlight",
+  Callback = function()while wait(1) do
+    local players = game.Players:GetPlayers()
+
+    for i, v in pairs(players) do
+        local esp = Instance.new("Highlight")
+        esp.Name = v.Name
+        esp.FillTransparency = 0.5
+        esp.FillColor = Color3.new(0, 0, 0)
+        esp.OutlineColor = Color3.new(179, 198, 187) -- Change color here
+        esp.OutlineTransparency = 0
+        esp.Parent = v.Character
+    end
+end
+    
+  end
+})
+
+MinimizeButton({
+  Image = "rbxassetid://72161096187712",
+  Size = {60, 60},
+  Color = Color3.fromRGB(10, 10, 10),
+  Corner = true,
+  Stroke = false,
+  StrokeColor = Color3.fromRGB(255, 0, 0)
+})
